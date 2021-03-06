@@ -4,6 +4,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+import os
+
 import pandas as pd
 import numpy as np
 
@@ -49,20 +51,28 @@ def parse(item):
     return(df)
 
 
-def main():
+def build_price_df(file_name):
 
     # Find average prices of each level of playstation
-    playstations = [1]
+    playstations = [1,2,3]
 
     df_playstations = pd.DataFrame()
 
     for p in playstations:
         s = "Playstation " + str(p)
-        print(s)
         df = parse(str(s))
-        df_playstations.append(df)
+        df_playstations = df_playstations.append(df)
 
-    print(df_playstations)
+    # Save to file
+    df_playstations.to_csv(file_name)
+
+def main():
+
+    FILE_NAME = "ps_prices.csv"
+
+    # Check if price data is present
+    if not os.path.exists(FILE_NAME):
+        build_price_df(FILE_NAME)
 
 if __name__ == "__main__":
     main()
