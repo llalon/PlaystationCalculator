@@ -39,7 +39,6 @@ def find_combns(levels=[1, 2, 3, 4], target=5):
 
     return combn
 
-
 def parse(item):
     # Adapted from https://www.blog.datahut.co/post/scraping-ebay
 
@@ -83,7 +82,6 @@ def parse(item):
 
     return df
 
-
 def build_price_df(file_name="ps_prices.csv"):
 
     # Find average prices of each level of playstation
@@ -108,8 +106,7 @@ def main():
     # Check if price data is present
     if not os.path.exists(FILE_NAME):
         print("WARNING: PS price data not found. Building index...")
-        build_price_df(FILE_NAME)
-        df = build_price_df()
+        df = build_price_df(FILE_NAME)
     else:
         # Import price data
         df = pd.read_csv("ps_prices.csv")
