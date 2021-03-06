@@ -1,22 +1,58 @@
 # -*- coding=utf-8 -*-
 #!/usr/bin/env python
 
+import requests
+from bs4 import BeautifulSoup
+
 import pandas as pd
+import numpy as np
 
-def search_item(name, pages):
-    ''' Search ebay for name, across the number of pages pages
-    '''
+def parse(item):
+    # Adapted from https://www.blog.datahut.co/post/scraping-ebay
 
-    url = "https://www.ebay.com/sch/i.html?_from=R40&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;_nkw="
-    name = name.replace(" ", "+")
+    items = []
+    prices = []
 
-    for p in range(1, pages):
-        url = url + name + "_sacat=0_pgn=" + str(p)
+    url = 'https://www.ebay.com/sch/i.html?_nkw={0}&_sacat=0'.format(item.replace(" ", "+"))
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, features="lxml")
+
+    listings = soup.find_all('li', attrs={'class': 's-item'})
+
+    for l in listings:
+        item_name=" "
+        item_price = " "
+
+        for n in l.find_all('h3', attrs={'class':"s-item__title"}):
+            # Find item names
+            if(str(n.find(text=True, recursive=False))!="None"):
+                item_name=str(n.find(text=True, recursive=False))
+                items.append(item_name)
+
+            # Find item price
+            if(item_name!=" "):
+                item_price = l.find('span', attrs={'class':"s-item__price"})
+                item_price = str(item_price.find(text=True, recursive=False))
+                item_price = item_price.replace("$", "")
+                
+                try:
+                    item_price = float(item_price)
+                except:
+                    print("ERROR: parsing price")
+                    item_price = np.nan
+
+                prices.append(item_price)
+
+    # Put into df
+    df = pd.DataFrame({"name":items, "price": prices})
+
+    return(df)
+
 
 def main():
 
-    # Search top 10 pages of E-Bay for 'iphone 8' and return the prices as data frame
-    item_1 = search_item("iphone 8", 10)
+    # Search E-Bay for 'iphone 8' and return the prices as data frame
+    print(parse("Iphone 8"))
 
 if __name__ == "__main__":
     main()
