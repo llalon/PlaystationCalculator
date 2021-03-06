@@ -44,15 +44,25 @@ def parse(item):
                 prices.append(item_price)
 
     # Put into df
-    df = pd.DataFrame({"name":items, "price": prices})
+    df = pd.DataFrame({"name":items, "price": prices, "item": item})
 
     return(df)
 
 
 def main():
 
-    # Search E-Bay for 'iphone 8' and return the prices as data frame
-    print(parse("Iphone 8"))
+    # Find average prices of each level of playstation
+    playstations = [1]
+
+    df_playstations = pd.DataFrame()
+
+    for p in playstations:
+        s = "Playstation " + str(p)
+        print(s)
+        df = parse(str(s))
+        df_playstations.append(df)
+
+    print(df_playstations)
 
 if __name__ == "__main__":
     main()
