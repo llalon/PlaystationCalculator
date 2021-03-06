@@ -66,5 +66,6 @@ for c in find_combns():
     prices_summary.append({"combn": c, "price": p})
     
 # Calculate the best way to buy a PS5
-print("The cheapest PS5 is")
+print("The cheapest PS5 is...")
+print(prices_summary)
     
