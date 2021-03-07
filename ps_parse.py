@@ -55,7 +55,7 @@ def parse(item):
 
 
 def build_price_df(
-    file_name="ps_prices.csv", levels=[1, 2, 3, 4], save_to_file=True, rm_na=True
+    file_name="ps_prices.csv", levels=[1, 2, 3, 4], save_to_file=True, rm_na=False
 ):
     # Find average prices of each level of playstation
 
@@ -66,7 +66,7 @@ def build_price_df(
         df = df.append(parse(str(s)))
 
     if save_to_file:
-        df.to_csv(file_name)
+        df.to_csv(file_name, index=False)
     if rm_na:
         df = df.dropna()
 

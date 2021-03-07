@@ -33,6 +33,9 @@ def find_combos(levels=[1, 2, 3, 4], target=5):
 
 def run(df):
 
+    # Drop NA
+    df = df.dropna()
+
     # Add PS levels as column
     df["levels"] = df.apply(lambda x: int(x["item"].split(" ")[1]), axis=1)
 
@@ -46,12 +49,14 @@ def run(df):
         avg_price.append(avg)
 
     # Calculate best price combinations
-    prices_summary = []
-    for c in find_combos():
+    combo_prices = []
+    combos = find_combos()
+    for c in combos:
         p = 0
         for i in c:
             p = p + avg_price[i - 1]
 
-        prices_summary.append({"combo": c, "price": p})
+        combo_prices.append(p)
 
-    print(prices_summary)
+    df_summary = pd.DataFrame({"combo": combos, "price": combo_prices})
+    print(df_summary)

@@ -54,8 +54,6 @@ for l in levels:
     dfl = df.loc[df["levels"] == l]
     prices = dfl["price"].to_numpy()
     avg = np.mean(reject_outliers(prices))
-
-    # Summarize this
     avgs.append(avg)
 
 # Function to find the lowest price for combinations of levels that add to the target
