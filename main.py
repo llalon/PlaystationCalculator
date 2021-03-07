@@ -39,6 +39,7 @@ def find_combns(levels=[1, 2, 3, 4], target=5):
 
     return combn
 
+
 def parse(item):
     # Adapted from https://www.blog.datahut.co/post/scraping-ebay
 
@@ -81,6 +82,7 @@ def parse(item):
     df = pd.DataFrame({"name": items, "price": prices, "item": item})
 
     return df
+
 
 def build_price_df(file_name="ps_prices.csv"):
 
