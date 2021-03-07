@@ -25,8 +25,7 @@ def main():
     # Run analysis
     df_summary = ps_calc.run(df)
 
-    # Plot
-    ps_plot.plot(df_summary)
+    print(df_summary)
 
 
 if __name__ == "__main__":
