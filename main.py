@@ -5,7 +5,7 @@ import os
 import pandas as pd
 import numpy as np
 
-import ps_parse, ps_calc
+import ps_parse, ps_calc, ps_plot
 
 
 def main():
@@ -23,7 +23,10 @@ def main():
         df = pd.read_csv(FILE_NAME)
 
     # Run analysis
-    ps_calc.run(df)
+    df_summary = ps_calc.run(df)
+
+    # Plot
+    ps_plot.plot(df_summary)
 
 
 if __name__ == "__main__":

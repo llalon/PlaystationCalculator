@@ -58,5 +58,16 @@ def run(df):
 
         combo_prices.append(p)
 
+    # Sort combos
+    for l in combos:
+        l.sort()
+
     df_summary = pd.DataFrame({"combo": combos, "price": combo_prices})
-    print(df_summary)
+
+    # Convert list to string
+    df_summary["combo"] = [",".join(map(str, i)) for i in df_summary["combo"]]
+
+    # Remove duplicates TODO: Do this up stream.
+    df_summary = df_summary.drop_duplicates()
+
+    return df_summary
