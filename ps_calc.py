@@ -31,9 +31,8 @@ def find_combos(levels=[1, 2, 3, 4], target=5):
     return combn
 
 
-def run(df):
-
-    # Drop NA
+# Finds price per level, returns a list in order of level
+def price_per_level(df):
     df = df.dropna()
 
     # Add PS levels as column
@@ -47,6 +46,13 @@ def run(df):
         prices = dfl["price"].to_numpy()
         avg = np.mean(reject_outliers(prices))
         avg_price.append(avg)
+
+    return avg_price
+
+
+def price_per_combo(df):
+
+    avg_price = price_per_level(df)
 
     # Calculate best price combinations
     combo_prices = []
